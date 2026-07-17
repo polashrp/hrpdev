@@ -4,10 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>HRP Dev - Zoho & Salesforce CRM Solutions</title>
-
     <meta name="description" content="HRP Dev builds powerful Zoho and Salesforce CRM extensions for data quality, validation, and automation. Trusted by businesses in 60+ countries." />
-    <!-- ===== LOAD CONFIG (Injected by GitHub Actions) ===== -->
-    <script src="config.js"></script>
     <style>
         /* ===== RESET & BASE ===== */
         * {
@@ -710,6 +707,76 @@
             color: #475569;
         }
 
+        /* ===== DEEPSEEK CHAT SECTION ===== */
+        .chat-section {
+            padding: 80px 0;
+            background: #f8fafc;
+        }
+
+        .chat-section .chat-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+        }
+
+        .chat-section .chat-header-bar {
+            background: #0f172a;
+            color: #fff;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .chat-section .chat-header-bar h3 {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .chat-section .chat-header-bar .badge {
+            font-size: 11px;
+            background: rgba(255,255,255,0.15);
+            padding: 4px 14px;
+            border-radius: 20px;
+            opacity: 0.8;
+        }
+
+        .chat-section .chat-container {
+            position: relative;
+            width: 100%;
+            height: 550px;
+            overflow: hidden;
+        }
+
+        .chat-section .chat-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        @media (max-width: 768px) {
+            .chat-section .chat-container {
+                height: 450px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .chat-section .chat-container {
+                height: 400px;
+            }
+            .chat-section .chat-header-bar {
+                flex-direction: column;
+                gap: 8px;
+                text-align: center;
+            }
+        }
+
         /* ===== CTA FINAL ===== */
         .cta-final {
             background: linear-gradient(135deg, #0f172a, #1e293b);
@@ -800,192 +867,6 @@
             }
         }
 
-        /* ===== AI CHAT WIDGET ===== */
-        .chat-widget {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-        }
-
-        .chat-toggle {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: #2563eb;
-            color: #fff;
-            border: none;
-            font-size: 28px;
-            cursor: pointer;
-            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.4);
-            transition: transform 0.3s, background 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .chat-toggle:hover {
-            transform: scale(1.05);
-            background: #1d4ed8;
-        }
-        .chat-toggle .close-icon {
-            display: none;
-        }
-        .chat-toggle.open .chat-icon {
-            display: none;
-        }
-        .chat-toggle.open .close-icon {
-            display: block;
-        }
-
-        .chat-window {
-            display: none;
-            width: 380px;
-            height: 500px;
-            background: #fff;
-            border-radius: 16px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-            flex-direction: column;
-            overflow: hidden;
-            margin-bottom: 16px;
-            border: 1px solid #e2e8f0;
-        }
-        .chat-window.open {
-            display: flex;
-        }
-
-        .chat-header {
-            background: #0f172a;
-            color: #fff;
-            padding: 16px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .chat-header h3 {
-            font-size: 16px;
-            font-weight: 600;
-        }
-        .chat-header .status {
-            font-size: 12px;
-            opacity: 0.7;
-        }
-        .chat-header .status.online {
-            color: #4ade80;
-        }
-        .chat-header .status.offline {
-            color: #f87171;
-        }
-
-        .chat-messages {
-            flex: 1;
-            padding: 16px 20px;
-            overflow-y: auto;
-            background: #f8fafc;
-        }
-
-        .chat-message {
-            margin-bottom: 12px;
-            display: flex;
-            flex-direction: column;
-        }
-        .chat-message.user {
-            align-items: flex-end;
-        }
-        .chat-message.ai {
-            align-items: flex-start;
-        }
-
-        .chat-message .bubble {
-            max-width: 85%;
-            padding: 10px 14px;
-            border-radius: 12px;
-            font-size: 14px;
-            line-height: 1.5;
-            word-wrap: break-word;
-        }
-        .chat-message.user .bubble {
-            background: #2563eb;
-            color: #fff;
-            border-bottom-right-radius: 4px;
-        }
-        .chat-message.ai .bubble {
-            background: #fff;
-            color: #1e293b;
-            border: 1px solid #e2e8f0;
-            border-bottom-left-radius: 4px;
-        }
-
-        .chat-message .timestamp {
-            font-size: 10px;
-            color: #94a3b8;
-            margin-top: 4px;
-            padding: 0 4px;
-        }
-
-        .chat-typing {
-            display: none;
-            padding: 8px 16px;
-            color: #94a3b8;
-            font-size: 13px;
-            font-style: italic;
-        }
-        .chat-typing.show {
-            display: block;
-        }
-
-        .chat-input-area {
-            display: flex;
-            padding: 12px 16px;
-            border-top: 1px solid #e2e8f0;
-            background: #fff;
-            gap: 8px;
-        }
-        .chat-input-area input {
-            flex: 1;
-            padding: 10px 14px;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            font-size: 14px;
-            font-family: inherit;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-        .chat-input-area input:focus {
-            border-color: #2563eb;
-        }
-        .chat-input-area button {
-            background: #2563eb;
-            color: #fff;
-            border: none;
-            padding: 10px 18px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: background 0.3s;
-        }
-        .chat-input-area button:hover {
-            background: #1d4ed8;
-        }
-        .chat-input-area button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        @media (max-width: 480px) {
-            .chat-window {
-                width: calc(100vw - 32px);
-                height: 450px;
-                right: 16px;
-            }
-            .chat-widget {
-                bottom: 16px;
-                right: 16px;
-            }
-        }
-
         /* ===== FOOTER ===== */
         footer {
             background: #0f172a;
@@ -1069,6 +950,7 @@
             <li><a href="#products">Extensions</a></li>
             <li><a href="#services">Services</a></li>
             <li><a href="#reviews">Reviews</a></li>
+            <li><a href="#chat">AI Chat</a></li>
             <li><a href="#contact">Contact</a></li>
             <li><a href="#contact" class="cta-nav">Get Started</a></li>
         </ul>
@@ -1392,6 +1274,28 @@
         </div>
     </section>
 
+    <!-- ===== DEEPSEEK AI CHAT SECTION ===== -->
+    <section class="chat-section" id="chat">
+        <div class="container">
+            <h2 class="section-title">🤖 AI Chat Assistant</h2>
+            <p class="section-subtitle">Ask our AI assistant anything about HRP Dev's services, extensions, or how we can help your business.</p>
+
+            <div class="chat-wrapper">
+                <div class="chat-header-bar">
+                    <h3>💬 HRP Dev Assistant</h3>
+                    <span class="badge">Powered by DeepSeek</span>
+                </div>
+                <div class="chat-container">
+                    <iframe 
+                        src="https://chat.deepseek.com/" 
+                        loading="lazy"
+                        allow="microphone">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- ===== CONTACT ===== -->
     <section class="contact-section" id="contact">
         <div class="container">
@@ -1453,6 +1357,7 @@
                 <a href="#about">About Us</a>
                 <a href="#services">Services</a>
                 <a href="#reviews">Testimonials</a>
+                <a href="#chat">AI Chat</a>
                 <a href="#contact">Contact</a>
             </div>
             <div>
@@ -1467,34 +1372,6 @@
             &copy; 2026 HRP Dev. All rights reserved. Built with ❤️ for CRM excellence.
         </div>
     </footer>
-
-    <!-- ===== AI CHAT WIDGET ===== -->
-    <div class="chat-widget" id="chatWidget">
-        <div class="chat-window" id="chatWindow">
-            <div class="chat-header">
-                <div>
-                    <h3>🤖 HRP Dev Assistant</h3>
-                    <span class="status offline" id="statusIndicator">● Offline</span>
-                </div>
-                <button onclick="toggleChat()" style="background:none;border:none;color:#fff;font-size:20px;cursor:pointer;">✕</button>
-            </div>
-            <div class="chat-messages" id="chatMessages">
-                <div class="chat-message ai">
-                    <div class="bubble">👋 Hello! I'm the HRP Dev AI assistant. Ask me about our CRM extensions, services, or how we can help your business!</div>
-                    <div class="timestamp">Just now</div>
-                </div>
-            </div>
-            <div class="chat-typing" id="chatTyping">AI is thinking...</div>
-            <div class="chat-input-area">
-                <input type="text" id="chatInput" placeholder="Type your message..." />
-                <button id="chatSendBtn" onclick="sendMessage()">Send</button>
-            </div>
-        </div>
-        <button class="chat-toggle" id="chatToggle" onclick="toggleChat()">
-            <span class="chat-icon">💬</span>
-            <span class="close-icon">✕</span>
-        </button>
-    </div>
 
     <!-- ===== JAVASCRIPT ===== -->
     <script>
@@ -1515,168 +1392,6 @@
             e.preventDefault();
             alert('Thank you for your message! We will get back to you shortly.');
             this.reset();
-        });
-
-        // ===== AI CHAT =====
-        const chatToggle = document.getElementById('chatToggle');
-        const chatWindow = document.getElementById('chatWindow');
-        const chatMessages = document.getElementById('chatMessages');
-        const chatInput = document.getElementById('chatInput');
-        const chatSendBtn = document.getElementById('chatSendBtn');
-        const chatTyping = document.getElementById('chatTyping');
-        const statusIndicator = document.getElementById('statusIndicator');
-
-        let isChatOpen = false;
-        let isProcessing = false;
-
-        // API Configuration - comes from config.js (injected by GitHub Actions)
-        const GEMINI_API_KEY = window.GEMINI_API_KEY || '';
-        const GEMINI_URL = window.API_ENDPOINT || 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
-        const MODEL_NAME = window.API_MODEL || 'gemini-1.5-flash';
-
-        function toggleChat() {
-            isChatOpen = !isChatOpen;
-            chatWindow.classList.toggle('open', isChatOpen);
-            chatToggle.classList.toggle('open', isChatOpen);
-            if (isChatOpen) {
-                chatInput.focus();
-                // Check if API key is configured
-                if (!GEMINI_API_KEY || GEMINI_API_KEY === '') {
-                    setStatus(false);
-                    addMessage('⚠️ API key not configured. Please contact the administrator.', 'ai');
-                } else {
-                    setStatus(true);
-                }
-            }
-        }
-
-        function addMessage(text, sender) {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `chat-message ${sender}`;
-
-            const bubble = document.createElement('div');
-            bubble.className = 'bubble';
-            bubble.innerHTML = text.replace(/\n/g, '<br>');
-
-            const timestamp = document.createElement('div');
-            timestamp.className = 'timestamp';
-            timestamp.textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-            messageDiv.appendChild(bubble);
-            messageDiv.appendChild(timestamp);
-            chatMessages.appendChild(messageDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-
-        function setTyping(visible) {
-            chatTyping.classList.toggle('show', visible);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-
-        function setStatus(online) {
-            if (online) {
-                statusIndicator.textContent = '● Online';
-                statusIndicator.className = 'status online';
-            } else {
-                statusIndicator.textContent = '● Offline';
-                statusIndicator.className = 'status offline';
-            }
-        }
-
-        async function sendMessage() {
-            const message = chatInput.value.trim();
-            if (!message || isProcessing) return;
-
-            // Check if API key is configured
-            if (!GEMINI_API_KEY || GEMINI_API_KEY === '') {
-                addMessage('⚠️ API key not configured. Please contact the administrator.', 'ai');
-                return;
-            }
-
-            isProcessing = true;
-            chatSendBtn.disabled = true;
-            chatInput.disabled = true;
-
-            addMessage(message, 'user');
-            chatInput.value = '';
-            setTyping(true);
-            setStatus(true);
-
-            try {
-                const url = `${GEMINI_URL}?key=${GEMINI_API_KEY}`;
-
-                const response = await fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        contents: [{
-                            parts: [{
-                                text: `You are a helpful assistant for HRP Dev, a company that builds Zoho and Salesforce CRM extensions. Your name is HRP Dev Assistant.
-
-        Key information about HRP Dev:
-        - We build extensions for Zoho CRM and Salesforce
-        - Main products: Data Guardian (data quality, health scoring, email/phone/address validation), Email Verifier Pro, Address Verify & Timezone, US Address Verify, Phone Validator
-        - Services: Zoho CRM Customization, Creator App Development, Books & Finance Integration, API & Third-Party Integration, Zoho Analytics & Reporting, Marketplace App Development
-        - Our clients are in 60+ countries
-        - We have 15+ reviews on Fiverr with 4.8/5 rating
-
-        Be friendly, professional, and concise. If asked about pricing, suggest contacting us directly.
-
-        User question: ${message}`
-                            }]
-                        }],
-                        generationConfig: {
-                            temperature: 0.7,
-                            maxOutputTokens: 500,
-                        }
-                    })
-                });
-
-                setTyping(false);
-
-                if (!response.ok) {
-                    const errorData = await response.text();
-                    console.error('API Error:', errorData);
-                    throw new Error(`API error: ${response.status} - ${errorData}`);
-                }
-
-                const data = await response.json();
-                const aiResponse = data.candidates?.[0]?.content?.parts?.[0]?.text ||
-                    'I apologize, but I couldn\'t generate a response. Please try again.';
-                addMessage(aiResponse, 'ai');
-
-            } catch (error) {
-                setTyping(false);
-                console.error('Chat error:', error);
-                addMessage(`⚠️ Error: ${error.message || 'Unable to connect to Gemini API. Please try again later.'}`, 'ai');
-                setStatus(false);
-            }
-
-            isProcessing = false;
-            chatSendBtn.disabled = false;
-            chatInput.disabled = false;
-            chatInput.focus();
-        }
-
-        // Enter key to send
-        chatInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                sendMessage();
-            }
-        });
-
-        // Check if API key is configured on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            if (!GEMINI_API_KEY || GEMINI_API_KEY === '') {
-                setStatus(false);
-                console.warn('⚠️ GEMINI_API_KEY not configured in GitHub Secrets');
-            } else {
-                setStatus(true);
-                console.log('✅ Gemini API is configured');
-            }
         });
     </script>
 
