@@ -1524,8 +1524,9 @@
     let isProcessing = false;
 
     // LM Studio configuration
-    const LM_STUDIO_URL = 'http://localhost:1234/v1/chat/completions'; // Default LM Studio API endpoint
-    const MODEL_NAME = 'local-model'; // Your model name
+    const LM_STUDIO_URL = 'http://localhost:1234/v1/chat/completions';
+    // Use the exact model name from LM Studio
+    const MODEL_NAME = 'qwen/qwen3-v1-4b';
 
     function toggleChat() {
         isChatOpen = !isChatOpen;
@@ -1542,7 +1543,8 @@
 
         const bubble = document.createElement('div');
         bubble.className = 'bubble';
-        bubble.textContent = text;
+        // Preserve line breaks
+        bubble.innerHTML = text.replace(/\n/g, '<br>');
 
         const timestamp = document.createElement('div');
         timestamp.className = 'timestamp';
@@ -1559,30 +1561,51 @@
         chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 
-    function setStatus(online) {
-        statusIndicator.textContent = online ? '● Online' : '● Offline';
-        statusIndicator.className = `status ${online ? 'online' : 'offline'}`;
+    function setStatus(online, message = '') {
+        if (online) {
+            statusIndicator.textContent = '● Online';
+            statusIndicator.className = 'status online';
+        } else {
+            statusIndicator.textContent = '● Offline';
+            statusIndicator.className = 'status offline';
+        }
     }
 
     async function sendMessage() {
         const message = chatInput.value.trim();
         if (!message || isProcessing) return;
 
-        // Check if LM Studio is reachable
+        // Check if LM Studio is reachable with a proper CORS request
         try {
             const healthCheck = await fetch('http://localhost:1234/v1/models', {
                 method: 'GET',
-                signal: AbortSignal.timeout(2000)
+                headers: {
+                    'Accept': 'application/json',
+                },
+                signal: AbortSignal.timeout(3000)
             });
+            
             if (!healthCheck.ok) {
                 setStatus(false);
-                addMessage('⚠️ LM Studio is not responding. Please make sure it\'s running and the API server is enabled.', 'ai');
+                addMessage('⚠️ LM Studio is not responding. Please make sure:\n1. LM Studio is running\n2. The API server is enabled (Settings → Local Inference Server)\n3. A model is loaded', 'ai');
                 return;
             }
+            
+            // Verify our model is available
+            const modelsData = await healthCheck.json();
+            const models = modelsData.data || [];
+            const modelAvailable = models.some(m => m.id === MODEL_NAME);
+            
+            if (!modelAvailable) {
+                setStatus(false);
+                addMessage(`⚠️ Model "${MODEL_NAME}" not found. Available models:\n${models.map(m => `• ${m.id}`).join('\n')}\n\nPlease load the correct model in LM Studio.`, 'ai');
+                return;
+            }
+            
             setStatus(true);
         } catch (error) {
             setStatus(false);
-            addMessage('⚠️ Cannot connect to LM Studio. Please ensure:\n1. LM Studio is running\n2. The API server is enabled (Settings → Local Inference Server)\n3. A model is loaded', 'ai');
+            addMessage('⚠️ Cannot connect to LM Studio. Please ensure:\n1. LM Studio is running\n2. The API server is enabled (Settings → Local Inference Server)\n3. A model is loaded\n\n📌 Tip: Check that the server port is 1234', 'ai');
             return;
         }
 
@@ -1608,7 +1631,16 @@
                     messages: [
                         {
                             role: 'system',
-                            content: 'You are a helpful assistant for HRP Dev, a company that builds Zoho and Salesforce CRM extensions. Your name is HRP Dev Assistant. You help clients understand our services, extensions like Data Guardian, Email Verifier, Address Verify, and Phone Validator. You are friendly, professional, and concise. If asked about pricing, suggest contacting us directly.'
+                            content: `You are a helpful assistant for HRP Dev, a company that builds Zoho and Salesforce CRM extensions. Your name is HRP Dev Assistant.
+
+Key information about HRP Dev:
+- We build extensions for Zoho CRM and Salesforce
+- Main products: Data Guardian (data quality, health scoring, email/phone/address validation), Email Verifier Pro, Address Verify & Timezone, US Address Verify, Phone Validator
+- Services: Zoho CRM Customization, Creator App Development, Books & Finance Integration, API & Third-Party Integration, Zoho Analytics & Reporting, Marketplace App Development
+- Our clients are in 60+ countries
+- We have 15+ reviews on Fiverr with 4.8/5 rating
+
+Be friendly, professional, and concise. If asked about pricing, suggest contacting us directly.`
                         },
                         {
                             role: 'user',
@@ -1652,21 +1684,35 @@
         }
     });
 
-    // Check LM Studio status on load
+    // Check LM Studio status on load and periodically
     async function checkLMStudioStatus() {
         try {
             const response = await fetch('http://localhost:1234/v1/models', {
                 method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                },
                 signal: AbortSignal.timeout(2000)
             });
-            setStatus(response.ok);
-        } catch {
+            
+            if (response.ok) {
+                const data = await response.json();
+                const models = data.data || [];
+                const modelAvailable = models.some(m => m.id === MODEL_NAME);
+                setStatus(modelAvailable);
+                if (!modelAvailable) {
+                    console.warn(`Model "${MODEL_NAME}" not found. Available:`, models.map(m => m.id));
+                }
+            } else {
+                setStatus(false);
+            }
+        } catch (error) {
             setStatus(false);
         }
     }
 
     // Initial status check
-    checkLMStudioStatus();
+    setTimeout(checkLMStudioStatus, 500);
     // Check status every 30 seconds
     setInterval(checkLMStudioStatus, 30000);
 </script>
