@@ -566,7 +566,7 @@
             margin-bottom: 20px;
         }
 
-        /* ===== TESTIMONIALS / REVIEWS (UPDATED WITH REAL FIVERR REVIEWS) ===== */
+        /* ===== TESTIMONIALS / REVIEWS ===== */
         .testimonials {
             padding: 80px 0;
             background: #f8fafc;
@@ -797,6 +797,189 @@
             }
         }
 
+        /* ===== AI CHAT WIDGET ===== */
+        .chat-widget {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .chat-toggle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #2563eb;
+            color: #fff;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.4);
+            transition: transform 0.3s, background 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .chat-toggle:hover {
+            transform: scale(1.05);
+            background: #1d4ed8;
+        }
+        .chat-toggle .close-icon {
+            display: none;
+        }
+        .chat-toggle.open .chat-icon {
+            display: none;
+        }
+        .chat-toggle.open .close-icon {
+            display: block;
+        }
+
+        .chat-window {
+            display: none;
+            width: 380px;
+            height: 500px;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            flex-direction: column;
+            overflow: hidden;
+            margin-bottom: 16px;
+            border: 1px solid #e2e8f0;
+        }
+        .chat-window.open {
+            display: flex;
+        }
+
+        .chat-header {
+            background: #0f172a;
+            color: #fff;
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .chat-header h3 {
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .chat-header .status {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+        .chat-header .status.online {
+            color: #4ade80;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 16px 20px;
+            overflow-y: auto;
+            background: #f8fafc;
+        }
+
+        .chat-message {
+            margin-bottom: 12px;
+            display: flex;
+            flex-direction: column;
+        }
+        .chat-message.user {
+            align-items: flex-end;
+        }
+        .chat-message.ai {
+            align-items: flex-start;
+        }
+
+        .chat-message .bubble {
+            max-width: 85%;
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 14px;
+            line-height: 1.5;
+            word-wrap: break-word;
+        }
+        .chat-message.user .bubble {
+            background: #2563eb;
+            color: #fff;
+            border-bottom-right-radius: 4px;
+        }
+        .chat-message.ai .bubble {
+            background: #fff;
+            color: #1e293b;
+            border: 1px solid #e2e8f0;
+            border-bottom-left-radius: 4px;
+        }
+
+        .chat-message .timestamp {
+            font-size: 10px;
+            color: #94a3b8;
+            margin-top: 4px;
+            padding: 0 4px;
+        }
+
+        .chat-typing {
+            display: none;
+            padding: 8px 16px;
+            color: #94a3b8;
+            font-size: 13px;
+            font-style: italic;
+        }
+        .chat-typing.show {
+            display: block;
+        }
+
+        .chat-input-area {
+            display: flex;
+            padding: 12px 16px;
+            border-top: 1px solid #e2e8f0;
+            background: #fff;
+            gap: 8px;
+        }
+        .chat-input-area input {
+            flex: 1;
+            padding: 10px 14px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .chat-input-area input:focus {
+            border-color: #2563eb;
+        }
+        .chat-input-area button {
+            background: #2563eb;
+            color: #fff;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        .chat-input-area button:hover {
+            background: #1d4ed8;
+        }
+        .chat-input-area button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 480px) {
+            .chat-window {
+                width: calc(100vw - 32px);
+                height: 450px;
+                right: 16px;
+            }
+            .chat-widget {
+                bottom: 16px;
+                right: 16px;
+            }
+        }
+
         /* ===== FOOTER ===== */
         footer {
             background: #0f172a;
@@ -857,7 +1040,7 @@
             }
         }
 
-        /* ===== RESPONSIVE TWEAKS FOR REVIEWS ===== */
+        /* ===== RESPONSIVE TWEAKS ===== */
         @media (max-width: 600px) {
             .testimonial-grid {
                 grid-template-columns: 1fr;
@@ -935,7 +1118,6 @@
         <p class="section-subtitle">Powerful add-ons built for Zoho and Salesforce CRM to supercharge your data quality.</p>
 
         <div class="product-grid">
-
             <!-- Data Guardian - Zoho -->
             <div class="product-card">
                 <div class="icon">🛡️</div>
@@ -1021,7 +1203,6 @@
                 </div>
                 <a href="https://marketplace.zoho.com/vendor/hrp-dev" target="_blank" class="product-link">View on Marketplace →</a>
             </div>
-
         </div>
     </div>
 </section>
@@ -1032,43 +1213,36 @@
         <h2 class="section-title">Our Services</h2>
         <p class="section-subtitle">From custom development to ongoing support — we've got your CRM covered.</p>
         <div class="service-grid">
-
             <div class="service-card">
                 <div class="icon">⚙️</div>
                 <h4>Zoho CRM Customization</h4>
                 <p>Customize Zoho CRM modules, workflows, and layouts to perfectly match your business process.</p>
             </div>
-
             <div class="service-card">
                 <div class="icon">📱</div>
                 <h4>Creator App Development</h4>
                 <p>Build custom applications with Zoho Creator using Deluge scripts to automate complex workflows.</p>
             </div>
-
             <div class="service-card">
                 <div class="icon">📚</div>
                 <h4>Books &amp; Finance Integration</h4>
                 <p>Automate accounting processes by integrating Zoho Books with Zoho Inventory, CRM, or third-party apps.</p>
             </div>
-
             <div class="service-card">
                 <div class="icon">🔗</div>
                 <h4>API &amp; Third-Party Integration</h4>
                 <p>Seamlessly connect Zoho apps with third-party platforms like Shopify, QuickBooks, or Google Workspace.</p>
             </div>
-
             <div class="service-card">
                 <div class="icon">📊</div>
                 <h4>Zoho Analytics &amp; Reporting</h4>
                 <p>Build insightful dashboards and reports for data-driven decision-making with colorful analytics.</p>
             </div>
-
             <div class="service-card">
                 <div class="icon">🏪</div>
                 <h4>Marketplace App Development</h4>
                 <p>Design and publish custom extensions on the Zoho Marketplace for CRM, Books, Projects, and more.</p>
             </div>
-
         </div>
     </div>
 </section>
@@ -1151,7 +1325,6 @@
         <p class="section-subtitle">Real feedback from real clients on Fiverr. See why businesses trust HRP Dev.</p>
 
         <div class="testimonial-grid">
-
             <!-- Review 1 -->
             <div class="testimonial-card">
                 <div class="stars">★★★★★</div>
@@ -1205,7 +1378,6 @@
                 <div class="reviewer-meta">Fiverr</div>
                 <span class="gig-tag">Zoho Development</span>
             </div>
-
         </div>
 
         <div class="link-wrapper">
@@ -1290,8 +1462,37 @@
     </div>
 </footer>
 
+<!-- ===== AI CHAT WIDGET ===== -->
+<div class="chat-widget" id="chatWidget">
+    <div class="chat-window" id="chatWindow">
+        <div class="chat-header">
+            <div>
+                <h3>🤖 HRP Dev Assistant</h3>
+                <span class="status online" id="statusIndicator">● Online</span>
+            </div>
+            <button onclick="toggleChat()" style="background:none;border:none;color:#fff;font-size:20px;cursor:pointer;">✕</button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="chat-message ai">
+                <div class="bubble">👋 Hello! I'm the HRP Dev AI assistant. Ask me about our CRM extensions, services, or how we can help your business!</div>
+                <div class="timestamp">Just now</div>
+            </div>
+        </div>
+        <div class="chat-typing" id="chatTyping">AI is thinking...</div>
+        <div class="chat-input-area">
+            <input type="text" id="chatInput" placeholder="Type your message..." />
+            <button id="chatSendBtn" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+    <button class="chat-toggle" id="chatToggle" onclick="toggleChat()">
+        <span class="chat-icon">💬</span>
+        <span class="close-icon">✕</span>
+    </button>
+</div>
+
 <!-- ===== JAVASCRIPT ===== -->
 <script>
+    // ===== NAVIGATION =====
     function toggleMenu() {
         const menu = document.getElementById('navMenu');
         menu.classList.toggle('show');
@@ -1303,11 +1504,171 @@
         });
     });
 
+    // ===== CONTACT FORM =====
     document.querySelector('.contact-form')?.addEventListener('submit', function(e) {
         e.preventDefault();
         alert('Thank you for your message! We will get back to you shortly.');
         this.reset();
     });
+
+    // ===== AI CHAT =====
+    const chatToggle = document.getElementById('chatToggle');
+    const chatWindow = document.getElementById('chatWindow');
+    const chatMessages = document.getElementById('chatMessages');
+    const chatInput = document.getElementById('chatInput');
+    const chatSendBtn = document.getElementById('chatSendBtn');
+    const chatTyping = document.getElementById('chatTyping');
+    const statusIndicator = document.getElementById('statusIndicator');
+
+    let isChatOpen = false;
+    let isProcessing = false;
+
+    // LM Studio configuration
+    const LM_STUDIO_URL = 'http://localhost:1234/v1/chat/completions'; // Default LM Studio API endpoint
+    const MODEL_NAME = 'local-model'; // Your model name
+
+    function toggleChat() {
+        isChatOpen = !isChatOpen;
+        chatWindow.classList.toggle('open', isChatOpen);
+        chatToggle.classList.toggle('open', isChatOpen);
+        if (isChatOpen) {
+            chatInput.focus();
+        }
+    }
+
+    function addMessage(text, sender) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `chat-message ${sender}`;
+
+        const bubble = document.createElement('div');
+        bubble.className = 'bubble';
+        bubble.textContent = text;
+
+        const timestamp = document.createElement('div');
+        timestamp.className = 'timestamp';
+        timestamp.textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+        messageDiv.appendChild(bubble);
+        messageDiv.appendChild(timestamp);
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function setTyping(visible) {
+        chatTyping.classList.toggle('show', visible);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function setStatus(online) {
+        statusIndicator.textContent = online ? '● Online' : '● Offline';
+        statusIndicator.className = `status ${online ? 'online' : 'offline'}`;
+    }
+
+    async function sendMessage() {
+        const message = chatInput.value.trim();
+        if (!message || isProcessing) return;
+
+        // Check if LM Studio is reachable
+        try {
+            const healthCheck = await fetch('http://localhost:1234/v1/models', {
+                method: 'GET',
+                signal: AbortSignal.timeout(2000)
+            });
+            if (!healthCheck.ok) {
+                setStatus(false);
+                addMessage('⚠️ LM Studio is not responding. Please make sure it\'s running and the API server is enabled.', 'ai');
+                return;
+            }
+            setStatus(true);
+        } catch (error) {
+            setStatus(false);
+            addMessage('⚠️ Cannot connect to LM Studio. Please ensure:\n1. LM Studio is running\n2. The API server is enabled (Settings → Local Inference Server)\n3. A model is loaded', 'ai');
+            return;
+        }
+
+        isProcessing = true;
+        chatSendBtn.disabled = true;
+        chatInput.disabled = true;
+
+        // Add user message
+        addMessage(message, 'user');
+        chatInput.value = '';
+
+        // Show typing indicator
+        setTyping(true);
+
+        try {
+            const response = await fetch(LM_STUDIO_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    model: MODEL_NAME,
+                    messages: [
+                        {
+                            role: 'system',
+                            content: 'You are a helpful assistant for HRP Dev, a company that builds Zoho and Salesforce CRM extensions. Your name is HRP Dev Assistant. You help clients understand our services, extensions like Data Guardian, Email Verifier, Address Verify, and Phone Validator. You are friendly, professional, and concise. If asked about pricing, suggest contacting us directly.'
+                        },
+                        {
+                            role: 'user',
+                            content: message
+                        }
+                    ],
+                    temperature: 0.7,
+                    max_tokens: 500,
+                    stream: false
+                })
+            });
+
+            setTyping(false);
+
+            if (!response.ok) {
+                const errorData = await response.text();
+                throw new Error(`LM Studio error: ${response.status} - ${errorData}`);
+            }
+
+            const data = await response.json();
+            const aiResponse = data.choices?.[0]?.message?.content || 'I apologize, but I couldn\'t generate a response. Please try again.';
+            addMessage(aiResponse, 'ai');
+
+        } catch (error) {
+            setTyping(false);
+            console.error('Chat error:', error);
+            addMessage(`⚠️ Error: ${error.message || 'Unable to connect to AI. Please check your LM Studio setup.'}`, 'ai');
+        }
+
+        isProcessing = false;
+        chatSendBtn.disabled = false;
+        chatInput.disabled = false;
+        chatInput.focus();
+    }
+
+    // Enter key to send
+    chatInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            sendMessage();
+        }
+    });
+
+    // Check LM Studio status on load
+    async function checkLMStudioStatus() {
+        try {
+            const response = await fetch('http://localhost:1234/v1/models', {
+                method: 'GET',
+                signal: AbortSignal.timeout(2000)
+            });
+            setStatus(response.ok);
+        } catch {
+            setStatus(false);
+        }
+    }
+
+    // Initial status check
+    checkLMStudioStatus();
+    // Check status every 30 seconds
+    setInterval(checkLMStudioStatus, 30000);
 </script>
 
 </body>
