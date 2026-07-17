@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trust Center - Data Guardian for Salesforce</title>
+    <style>
+        body { font-family: 'Inter', Arial, sans-serif; background: #f8f9fa; margin: 0; padding: 40px; color: #333; }
+        .container { max-width: 850px; margin: 0 auto; background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        h1 { color: #0070D2; /* Salesforce Blue */ }
+        h2 { color: #2C3E50; margin-top: 30px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        p { line-height: 1.6; }
+        ul { line-height: 1.8; }
+        .badge { display: inline-block; background: #0070D2; color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 12px; margin-bottom: 20px; }
+        .footer { margin-top: 40px; border-top: 1px solid #eee; padding-top: 20px; text-align: center; color: #666; font-size: 14px; }
+        a { color: #0070D2; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="badge">Salesforce AppExchange Partner</div>
+        <h1>🛡️ Data Guardian Trust Center</h1>
+        <p><strong>Last Updated:</strong> July 2026</p>
+
+        <h2>Our Security Commitment</h2>
+        <p>Data Guardian is committed to protecting the data of our customers. We follow industry-standard security practices to ensure your Salesforce data remains private, secure, and accessible only to authorized users. This page outlines our security posture for the Salesforce AppExchange Security Review.</p>
+
+        <h2>Data Storage & Encryption</h2>
+        <ul>
+            <li><strong>Encryption in Transit:</strong> All data transmitted between your Salesforce org and our backend services is encrypted using <strong>TLS 1.2+</strong> protocols. All API calls are made over secure HTTPS.</li>
+            <li><strong>Encryption at Rest:</strong> We rely on Salesforce's native encryption capabilities for data stored within Salesforce objects. No sensitive data (Emails, Phones, Addresses) is persisted in external databases outside of Salesforce.</li>
+        </ul>
+
+        <h2>External API Integrations (Data Processing)</h2>
+        <p>Data Guardian sends data to the following trusted third-party services strictly for the purpose of data validation:</p>
+        <ul>
+            <li><strong>Email Validation:</strong> We send emails to <strong>PythonAnywhere</strong> to validate syntax, domain existence, and spam-trap risk. No emails are stored permanently.</li>
+            <li><strong>Address Validation:</strong> We send physical addresses to <strong>EasyPost</strong> to verify deliverability. </li>
+        </ul>
+        <p><strong>No data is shared, sold, or used for marketing purposes.</strong> All processing is ephemeral and occurs in real-time.</p>
+
+        <h2>Access Control & Permissions</h2>
+        <ul>
+            <li>All users must be explicitly assigned a <strong>Permission Set</strong> within Salesforce to use Data Guardian.</li>
+            <li>Access to the backend API keys is stored securely using <strong>Salesforce Custom Settings</strong> (Protected) and never exposed to the client-side.</li>
+            <li>We follow the <strong>Principle of Least Privilege (PoLP)</strong>. The extension only requests the minimum permissions required to read/write Health Score fields and create Tasks.</li>
+        </ul>
+
+        <h2>Data Retention & Deletion</h2>
+        <ul>
+            <li>We do not store your Salesforce data in external databases. </li>
+            <li>If an integration is removed or uninstalled, no external data remains. You can delete all Data Guardian fields and tasks directly from your Salesforce org at any time.</li>
+            <li>Backend logs (if any) are automatically rotated and deleted after 30 days.</li>
+        </ul>
+
+        <h2>Incident Response & Contact</h2>
+        <p>In the event of a security incident, we will notify affected customers within 72 hours and follow the standard Salesforce AppExchange reporting procedures.</p>
+        
+        <div class="footer">
+            <p><strong>Security Contact:</strong> <a href="mailto:polas.habib@zohomail.com">polas.habib@zohomail.com</a></p>
+            <p><a href="index.html">← Back to Data Guardian Home</a></p>
+        </div>
+    </div>
+</body>
+</html>
