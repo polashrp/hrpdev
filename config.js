@@ -1,4 +1,4 @@
-// ===== AI CHAT - USING GITHUB SECRETS =====
+// ===== AI CHAT - GEMINI 2.0 FLASH =====
 const chatToggle = document.getElementById('chatToggle');
 const chatWindow = document.getElementById('chatWindow');
 const chatMessages = document.getElementById('chatMessages');
@@ -10,11 +10,11 @@ const statusIndicator = document.getElementById('statusIndicator');
 let isChatOpen = false;
 let isProcessing = false;
 
-// ===== API Configuration (Injected by GitHub Actions) =====
-// These values come from config.js which is created by GitHub Actions
+// API Configuration - comes from config.js
 const GEMINI_API_KEY = window.GEMINI_API_KEY || '';
-const GEMINI_URL = window.API_ENDPOINT || 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
-const MODEL_NAME = window.API_MODEL || 'gemini-1.5-flash';
+// Use the correct model from your available list
+const GEMINI_MODEL = 'gemini-2.0-flash';
+const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
 
 function toggleChat() {
     isChatOpen = !isChatOpen;
@@ -22,7 +22,6 @@ function toggleChat() {
     chatToggle.classList.toggle('open', isChatOpen);
     if (isChatOpen) {
         chatInput.focus();
-        // Check if API key is configured
         if (!GEMINI_API_KEY || GEMINI_API_KEY === '') {
             setStatus(false);
             addMessage('⚠️ API key not configured. Please contact the administrator.', 'ai');
@@ -69,7 +68,6 @@ async function sendMessage() {
     const message = chatInput.value.trim();
     if (!message || isProcessing) return;
 
-    // Check if API key is configured
     if (!GEMINI_API_KEY || GEMINI_API_KEY === '') {
         addMessage('⚠️ API key not configured. Please contact the administrator.', 'ai');
         return;
@@ -85,9 +83,7 @@ async function sendMessage() {
     setStatus(true);
 
     try {
-        const url = `${GEMINI_URL}?key=${GEMINI_API_KEY}`;
-        
-        const response = await fetch(url, {
+        const response = await fetch(GEMINI_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -125,8 +121,8 @@ User question: ${message}`
         }
 
         const data = await response.json();
-        const aiResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || 
-                          'I apologize, but I couldn\'t generate a response. Please try again.';
+        const aiResponse = data.candidates?.[0]?.content?.parts?.[0]?.text ||
+            'I apologize, but I couldn\'t generate a response. Please try again.';
         addMessage(aiResponse, 'ai');
 
     } catch (error) {
@@ -150,13 +146,12 @@ chatInput.addEventListener('keydown', (e) => {
     }
 });
 
-// Check if API key is configured on page load
 document.addEventListener('DOMContentLoaded', function() {
     if (!GEMINI_API_KEY || GEMINI_API_KEY === '') {
         setStatus(false);
-        console.warn('⚠️ GEMINI_API_KEY not configured in GitHub Secrets');
+        console.warn('⚠️ GEMINI_API_KEY not configured');
     } else {
         setStatus(true);
-        console.log('✅ Gemini API is configured');
+        console.log('✅ Gemini API is configured with model:', GEMINI_MODEL);
     }
 });
