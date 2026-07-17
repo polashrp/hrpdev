@@ -707,76 +707,6 @@
             color: #475569;
         }
 
-        /* ===== DEEPSEEK CHAT SECTION ===== */
-        .chat-section {
-            padding: 80px 0;
-            background: #f8fafc;
-        }
-
-        .chat-section .chat-wrapper {
-            max-width: 900px;
-            margin: 0 auto;
-            background: #fff;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
-        }
-
-        .chat-section .chat-header-bar {
-            background: #0f172a;
-            color: #fff;
-            padding: 16px 24px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .chat-section .chat-header-bar h3 {
-            font-size: 18px;
-            font-weight: 600;
-        }
-
-        .chat-section .chat-header-bar .badge {
-            font-size: 11px;
-            background: rgba(255,255,255,0.15);
-            padding: 4px 14px;
-            border-radius: 20px;
-            opacity: 0.8;
-        }
-
-        .chat-section .chat-container {
-            position: relative;
-            width: 100%;
-            height: 550px;
-            overflow: hidden;
-        }
-
-        .chat-section .chat-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        @media (max-width: 768px) {
-            .chat-section .chat-container {
-                height: 450px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .chat-section .chat-container {
-                height: 400px;
-            }
-            .chat-section .chat-header-bar {
-                flex-direction: column;
-                gap: 8px;
-                text-align: center;
-            }
-        }
-
         /* ===== CTA FINAL ===== */
         .cta-final {
             background: linear-gradient(135deg, #0f172a, #1e293b);
@@ -867,6 +797,134 @@
             }
         }
 
+        /* ===== FLOATING CHAT WIDGET (KIMI AI) ===== */
+        .chat-widget {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .chat-toggle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #2563eb;
+            color: #fff;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.4);
+            transition: transform 0.3s, background 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .chat-toggle:hover {
+            transform: scale(1.05);
+            background: #1d4ed8;
+        }
+        .chat-toggle .close-icon {
+            display: none;
+        }
+        .chat-toggle.open .chat-icon {
+            display: none;
+        }
+        .chat-toggle.open .close-icon {
+            display: block;
+        }
+
+        .chat-window {
+            display: none;
+            width: 400px;
+            height: 550px;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            flex-direction: column;
+            overflow: hidden;
+            margin-bottom: 16px;
+            border: 1px solid #e2e8f0;
+        }
+        .chat-window.open {
+            display: flex;
+        }
+
+        .chat-header {
+            background: #0f172a;
+            color: #fff;
+            padding: 14px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        .chat-header h3 {
+            font-size: 15px;
+            font-weight: 600;
+        }
+        .chat-header .badge {
+            font-size: 10px;
+            opacity: 0.7;
+            background: rgba(255,255,255,0.15);
+            padding: 2px 12px;
+            border-radius: 20px;
+        }
+        .chat-header .close-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0.7;
+            padding: 0 4px;
+        }
+        .chat-header .close-btn:hover {
+            opacity: 1;
+        }
+
+        .chat-body {
+            flex: 1;
+            position: relative;
+            background: #f8fafc;
+            overflow: hidden;
+        }
+        .chat-body iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .chat-footer {
+            padding: 8px 16px;
+            background: #fff;
+            border-top: 1px solid #e2e8f0;
+            font-size: 10px;
+            color: #94a3b8;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 480px) {
+            .chat-window {
+                width: calc(100vw - 32px);
+                height: 500px;
+                right: 0;
+            }
+            .chat-widget {
+                bottom: 16px;
+                right: 16px;
+            }
+            .chat-toggle {
+                width: 54px;
+                height: 54px;
+                font-size: 24px;
+            }
+        }
+
         /* ===== FOOTER ===== */
         footer {
             background: #0f172a;
@@ -950,7 +1008,6 @@
             <li><a href="#products">Extensions</a></li>
             <li><a href="#services">Services</a></li>
             <li><a href="#reviews">Reviews</a></li>
-            <li><a href="#chat">AI Chat</a></li>
             <li><a href="#contact">Contact</a></li>
             <li><a href="#contact" class="cta-nav">Get Started</a></li>
         </ul>
@@ -1274,28 +1331,6 @@
         </div>
     </section>
 
-    <!-- ===== DEEPSEEK AI CHAT SECTION ===== -->
-    <section class="chat-section" id="chat">
-        <div class="container">
-            <h2 class="section-title">🤖 AI Chat Assistant</h2>
-            <p class="section-subtitle">Ask our AI assistant anything about HRP Dev's services, extensions, or how we can help your business.</p>
-
-            <div class="chat-wrapper">
-                <div class="chat-header-bar">
-                    <h3>💬 HRP Dev Assistant</h3>
-                    <span class="badge">Powered by DeepSeek</span>
-                </div>
-                <div class="chat-container">
-                    <iframe 
-                        src="https://chat.deepseek.com/" 
-                        loading="lazy"
-                        allow="microphone">
-                    </iframe>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- ===== CONTACT ===== -->
     <section class="contact-section" id="contact">
         <div class="container">
@@ -1357,7 +1392,6 @@
                 <a href="#about">About Us</a>
                 <a href="#services">Services</a>
                 <a href="#reviews">Testimonials</a>
-                <a href="#chat">AI Chat</a>
                 <a href="#contact">Contact</a>
             </div>
             <div>
@@ -1372,6 +1406,33 @@
             &copy; 2026 HRP Dev. All rights reserved. Built with ❤️ for CRM excellence.
         </div>
     </footer>
+
+    <!-- ===== FLOATING CHAT WIDGET (KIMI AI) ===== -->
+    <div class="chat-widget" id="chatWidget">
+        <div class="chat-window" id="chatWindow">
+            <div class="chat-header">
+                <div>
+                    <h3>💬 HRP Dev Assistant</h3>
+                    <span class="badge">Powered by Kimi AI</span>
+                </div>
+                <button class="close-btn" onclick="toggleChat()">✕</button>
+            </div>
+            <div class="chat-body">
+                <iframe 
+                    src="https://kimi.moonshot.cn/" 
+                    loading="lazy"
+                    allow="microphone">
+                </iframe>
+            </div>
+            <div class="chat-footer">
+                AI responses are generated and may not be 100% accurate.
+            </div>
+        </div>
+        <button class="chat-toggle" id="chatToggle" onclick="toggleChat()">
+            <span class="chat-icon">💬</span>
+            <span class="close-icon">✕</span>
+        </button>
+    </div>
 
     <!-- ===== JAVASCRIPT ===== -->
     <script>
@@ -1393,6 +1454,17 @@
             alert('Thank you for your message! We will get back to you shortly.');
             this.reset();
         });
+
+        // ===== CHAT WIDGET =====
+        const chatToggle = document.getElementById('chatToggle');
+        const chatWindow = document.getElementById('chatWindow');
+        let isChatOpen = false;
+
+        function toggleChat() {
+            isChatOpen = !isChatOpen;
+            chatWindow.classList.toggle('open', isChatOpen);
+            chatToggle.classList.toggle('open', isChatOpen);
+        }
     </script>
 
 </body>
