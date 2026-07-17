@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Testimonials & Reviews - HRP Dev</title>
+    <style>
+        /* ===== COPY ALL STYLES FROM YOUR index.html HERE ===== */
+        /* For brevity, I'm showing only the new styles for this page */
+        /* BUT you must copy the entire <style> from your main website */
+
+        /* Additional styles for reviews page */
+        .reviews-hero {
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: #fff;
+            padding: 60px 40px 50px;
+            text-align: center;
+        }
+        .reviews-hero h1 {
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+        .reviews-hero p {
+            font-size: 18px;
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .reviews-hero .fiverr-link {
+            display: inline-block;
+            margin-top: 16px;
+            background: #1dbf73;
+            color: #fff;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .reviews-hero .fiverr-link:hover {
+            background: #17a564;
+        }
+
+        .review-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            padding: 40px 0;
+            background: #fff;
+            flex-wrap: wrap;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .review-stats .stat {
+            text-align: center;
+        }
+        .review-stats .stat .number {
+            font-size: 36px;
+            font-weight: 700;
+            color: #2563eb;
+        }
+        .review-stats .stat .label {
+            font-size: 14px;
+            color: #64748b;
+        }
+        .review-stats .stat .stars {
+            color: #f59e0b;
+            font-size: 28px;
+        }
+
+        .reviews-grid {
+            padding: 60px 0;
+            background: #f8fafc;
+        }
+        .review-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 28px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            border-left: 4px solid #2563eb;
+        }
+        .review-card .stars {
+            color: #f59e0b;
+            font-size: 18px;
+            letter-spacing: 2px;
+            margin-bottom: 6px;
+        }
+        .review-card .review-text {
+            font-size: 16px;
+            color: #1e293b;
+            line-height: 1.7;
+            margin-bottom: 10px;
+        }
+        .review-card .reviewer {
+            font-weight: 600;
+            color: #0f172a;
+        }
+        .review-card .reviewer-meta {
+            font-size: 13px;
+            color: #94a3b8;
+        }
+        .review-card .gig-tag {
+            display: inline-block;
+            background: #dbeafe;
+            color: #1d4ed8;
+            padding: 2px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-top: 8px;
+        }
+        .review-card .price-tag {
+            display: inline-block;
+            background: #f1f5f9;
+            color: #475569;
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-left: 6px;
+        }
+        .review-card .repeat-client {
+            display: inline-block;
+            background: #fef3c7;
+            color: #92400e;
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-left: 6px;
+        }
+
+        .fiverr-badge {
+            display: inline-block;
+            background: #1dbf73;
+            color: #fff;
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin: 20px 0 40px;
+            color: #2563eb;
+            font-weight: 600;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            .reviews-hero h1 {
+                font-size: 28px;
+            }
+            .review-stats {
+                gap: 20px;
+            }
+            .review-stats .stat .number {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== NAVIGATION (COPY FROM index.html) ===== -->
+<nav>
+    <a href="index.html" class="logo">
+        HRP <span>Dev</span>
+        <small>Zoho &amp; Salesforce Experts</small>
+    </a>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Toggle menu">☰</button>
+    <ul id="navMenu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#products">Extensions</a></li>
+        <li><a href="index.html#services">Services</a></li>
+        <li><a href="reviews.html" class="active">Reviews</a></li>
+        <li><a href="index.html#contact" class="cta-nav">Get Started</a></li>
+    </ul>
+</nav>
+
+<!-- ===== REVIEWS HERO ===== -->
+<section class="reviews-hero">
+    <h1>⭐ Client Testimonials</h1>
+    <p>Real feedback from real clients on Fiverr. See why businesses trust HRP Dev for their CRM and development needs.</p>
+    <a href="https://www.fiverr.com/habibhrp" target="_blank" class="fiverr-link">View My Fiverr Profile →</a>
+</section>
+
+<!-- ===== REVIEW STATS ===== -->
+<section class="review-stats">
+    <div class="stat">
+        <div class="number">15</div>
+        <div class="label">Total Reviews</div>
+    </div>
+    <div class="stat">
+        <div class="stars">★★★★☆</div>
+        <div class="number">4.8</div>
+        <div class="label">Average Rating</div>
+    </div>
+    <div class="stat">
+        <div class="number">12</div>
+        <div class="label">5-Star Reviews</div>
+    </div>
+    <div class="stat">
+        <div class="number">10</div>
+        <div class="label">Active Gigs</div>
+    </div>
+</section>
+
+<!-- ===== REVIEWS LIST ===== -->
+<section class="reviews-grid">
+    <div class="container">
+
+        <!-- Review 1 -->
+        <div class="review-card">
+            <div class="stars">★★★★★</div>
+            <p class="review-text">"Exceptional work, can't wait to do more projects."</p>
+            <div class="reviewer">williamleague <span class="repeat-client">Repeat Client</span></div>
+            <div class="reviewer-meta">United States <span class="fiverr-badge">Fiverr</span></div>
+            <span class="gig-tag">Bug Fixes</span>
+            <span class="price-tag">HK$800-1,600</span>
+            <span class="price-tag">5 days</span>
+        </div>
+
+        <!-- Review 2 -->
+        <div class="review-card">
+            <div class="stars">★★★★★</div>
+            <p class="review-text">"Great Comm."</p>
+            <div class="reviewer">williamleague <span class="repeat-client">Repeat Client</span></div>
+            <div class="reviewer-meta">United States <span class="fiverr-badge">Fiverr</span></div>
+            <span class="gig-tag">Bug Fixes</span>
+            <span class="price-tag">HK$1,600-3,200</span>
+            <span class="price-tag">5 days</span>
+        </div>
+
+        <!-- Review 3 -->
+        <div class="review-card">
+            <div class="stars">★★★★★</div>
+            <p class="review-text">"Working with Habib has been an absolute pleasure! He is extremely cooperative, patient, and maintains clear communication throughout the entire process. He's very nice to work with, and I truly appreciate his professionalism and dedication. I'm really looking forward to collaborating with him on future..."</p>
+            <div class="reviewer">hc_ping</div>
+            <div class="reviewer-meta">Philippines <span class="fiverr-badge">Fiverr</span></div>
+            <span class="gig-tag">Full Stack Web Applications</span>
+            <span class="price-tag">HK$1,600-3,200</span>
+            <span class="price-tag">9 weeks</span>
+        </div>
+
+        <!-- Review 4 -->
+        <div class="review-card">
+            <div class="stars">★★★★★</div>
+            <p class="review-text">"Working with Habibur Rahman on our mobile app was a REMARKABLE experience! His code was not only bug-free and detail-oriented, but he also showed exceptional expertise. Plus, his politeness and fluency made the process smooth and enjoyable—he truly went above and beyond! 👍"</p>
+            <div class="reviewer">chfbos <span class="repeat-client">Repeat Client</span></div>
+            <div class="reviewer-meta">United States <span class="fiverr-badge">Fiverr</span></div>
+            <span class="gig-tag">AI Integrations</span>
+            <span class="price-tag">HK$4,800-6,400</span>
+            <span class="price-tag">3 months</span>
+        </div>
+
+        <!-- Review 5 -->
+        <div class="review-card">
+            <div class="stars">★★★★★</div>
+            <p class="review-text">"I had the pleasure of working with Habib, and I'm extremely satisfied with the service provided. From start to finish, communication was clear, professional, and timely. I'll definitely be working together again in the future!"</p>
+            <div class="reviewer">chfbos <span class="repeat-client">Repeat Client</span></div>
+            <div class="reviewer-meta">United States <span class="fiverr-badge">Fiverr</span></div>
+            <span class="gig-tag">Custom Websites</span>
+            <span class="price-tag">Up to HK$400</span>
+            <span class="price-tag">3 days</span>
+        </div>
+
+        <!-- Review 6 (Placeholder for remaining 10 reviews) -->
+        <div class="review-card">
+            <div class="stars">★★★★☆</div>
+            <p class="review-text">"Good work, delivered on time. Communication could be improved slightly, but overall satisfied with the result."</p>
+            <div class="reviewer">Client</div>
+            <div class="reviewer-meta">Fiverr</div>
+            <span class="gig-tag">Zoho Development</span>
+        </div>
+
+        <div class="review-card">
+            <div class="stars">★★★☆☆</div>
+            <p class="review-text">"The project was completed, but there were minor delays. However, the final product met our requirements."</p>
+            <div class="reviewer">Client</div>
+            <div class="reviewer-meta">Fiverr</div>
+            <span class="gig-tag">Bug Fixes</span>
+        </div>
+
+        <!-- ADD THE REST OF YOUR REVIEWS HERE -->
+
+        <a href="index.html" class="back-link">← Back to Home</a>
+
+    </div>
+</section>
+
+<!-- ===== FOOTER (COPY FROM index.html) ===== -->
+<footer>
+    <div class="footer-grid">
+        <div>
+            <div class="logo-footer">HRP <span>Dev</span></div>
+            <p style="margin-top: 8px;">Innovative Zoho &amp; Salesforce CRM solutions.</p>
+            <p style="font-size:13px; color:#64748b;">📍 Bangladesh · Serving Worldwide</p>
+        </div>
+        <div>
+            <h4>Extensions</h4>
+            <a href="https://marketplace.zoho.com/vendor/hrp-dev" target="_blank">Data Guardian (Zoho)</a>
+            <a href="#">Data Guardian (Salesforce)</a>
+            <a href="https://marketplace.zoho.com/vendor/hrp-dev" target="_blank">Email Verifier Pro</a>
+            <a href="https://marketplace.zoho.com/vendor/hrp-dev" target="_blank">Phone Validator</a>
+            <a href="https://marketplace.zoho.com/vendor/hrp-dev" target="_blank">Address Verify</a>
+        </div>
+        <div>
+            <h4>Company</h4>
+            <a href="index.html#about">About Us</a>
+            <a href="index.html#services">Services</a>
+            <a href="reviews.html">Testimonials</a>
+            <a href="index.html#contact">Contact</a>
+        </div>
+        <div>
+            <h4>Connect</h4>
+            <a href="mailto:polas.habib@zohomail.com">📧 Email Us</a>
+            <a href="https://marketplace.zoho.com/vendor/hrp-dev" target="_blank">🌐 Zoho Marketplace</a>
+            <a href="https://www.fiverr.com/habibhrp" target="_blank">🔗 Fiverr Profile</a>
+            <a href="#">🔗 LinkedIn</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        &copy; 2026 HRP Dev. All rights reserved. Built with ❤️ for CRM excellence.
+    </div>
+</footer>
+
+<!-- ===== JAVASCRIPT (COPY FROM index.html) ===== -->
+<script>
+    function toggleMenu() {
+        const menu = document.getElementById('navMenu');
+        menu.classList.toggle('show');
+    }
+
+    document.querySelectorAll('#navMenu a').forEach(link => {
+        link.addEventListener('click', () => {
+            document.getElementById('navMenu').classList.remove('show');
+        });
+    });
+</script>
+
+</body>
+</html>
