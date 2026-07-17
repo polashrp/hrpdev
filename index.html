@@ -872,6 +872,9 @@
         .chat-header .status.online {
             color: #4ade80;
         }
+        .chat-header .status.offline {
+            color: #f87171;
+        }
 
         .chat-messages {
             flex: 1;
@@ -1468,7 +1471,7 @@
         <div class="chat-header">
             <div>
                 <h3>🤖 HRP Dev Assistant</h3>
-                <span class="status online" id="statusIndicator">● Online</span>
+                <span class="status offline" id="statusIndicator">● Offline</span>
             </div>
             <button onclick="toggleChat()" style="background:none;border:none;color:#fff;font-size:20px;cursor:pointer;">✕</button>
         </div>
@@ -1511,114 +1514,142 @@
         this.reset();
     });
 
-// ===== AI CHAT =====
-const chatToggle = document.getElementById('chatToggle');
-const chatWindow = document.getElementById('chatWindow');
-const chatMessages = document.getElementById('chatMessages');
-const chatInput = document.getElementById('chatInput');
-const chatSendBtn = document.getElementById('chatSendBtn');
-const chatTyping = document.getElementById('chatTyping');
-const statusIndicator = document.getElementById('statusIndicator');
+    // ===== AI CHAT =====
+    const chatToggle = document.getElementById('chatToggle');
+    const chatWindow = document.getElementById('chatWindow');
+    const chatMessages = document.getElementById('chatMessages');
+    const chatInput = document.getElementById('chatInput');
+    const chatSendBtn = document.getElementById('chatSendBtn');
+    const chatTyping = document.getElementById('chatTyping');
+    const statusIndicator = document.getElementById('statusIndicator');
 
-let isChatOpen = false;
-let isProcessing = false;
+    let isChatOpen = false;
+    let isProcessing = false;
 
-// LM Studio configuration - CORRECTED API PATH
-const LM_STUDIO_BASE = 'http://192.168.1.4:1234';
-// IMPORTANT: LM Studio uses /api/v1/ not /v1/
-const LM_STUDIO_URL = `${LM_STUDIO_BASE}/api/v1/chat/completions`;
-const MODEL_NAME = 'qwen/qwen3-vl-4b';
+    // LM Studio configuration
+    const LM_STUDIO_BASE = 'http://192.168.1.4:1234';
+    const LM_STUDIO_URL = `${LM_STUDIO_BASE}/api/v1/chat/completions`;
+    const MODEL_NAME = 'qwen/qwen3-vl-4b';
 
-function toggleChat() {
-    isChatOpen = !isChatOpen;
-    chatWindow.classList.toggle('open', isChatOpen);
-    chatToggle.classList.toggle('open', isChatOpen);
-    if (isChatOpen) {
-        chatInput.focus();
+    function toggleChat() {
+        isChatOpen = !isChatOpen;
+        chatWindow.classList.toggle('open', isChatOpen);
+        chatToggle.classList.toggle('open', isChatOpen);
+        if (isChatOpen) {
+            chatInput.focus();
+        }
     }
-}
 
-function addMessage(text, sender) {
-    const messageDiv = document.createElement('div');
-    messageDiv.className = `chat-message ${sender}`;
+    function addMessage(text, sender) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `chat-message ${sender}`;
 
-    const bubble = document.createElement('div');
-    bubble.className = 'bubble';
-    bubble.innerHTML = text.replace(/\n/g, '<br>');
+        const bubble = document.createElement('div');
+        bubble.className = 'bubble';
+        bubble.innerHTML = text.replace(/\n/g, '<br>');
 
-    const timestamp = document.createElement('div');
-    timestamp.className = 'timestamp';
-    timestamp.textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        const timestamp = document.createElement('div');
+        timestamp.className = 'timestamp';
+        timestamp.textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-    messageDiv.appendChild(bubble);
-    messageDiv.appendChild(timestamp);
-    chatMessages.appendChild(messageDiv);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-}
-
-function setTyping(visible) {
-    chatTyping.classList.toggle('show', visible);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-}
-
-function setStatus(online) {
-    if (online) {
-        statusIndicator.textContent = '● Online';
-        statusIndicator.className = 'status online';
-    } else {
-        statusIndicator.textContent = '● Offline';
-        statusIndicator.className = 'status offline';
+        messageDiv.appendChild(bubble);
+        messageDiv.appendChild(timestamp);
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
     }
-}
 
-async function sendMessage() {
-    const message = chatInput.value.trim();
-    if (!message || isProcessing) return;
+    function setTyping(visible) {
+        chatTyping.classList.toggle('show', visible);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
 
-    // Check if LM Studio is reachable
-    try {
-        // Use the correct /api/v1/ path for health check
-        const healthCheck = await fetch(`${LM_STUDIO_BASE}/api/v1/models`, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-            },
-            signal: AbortSignal.timeout(3000)
-        });
-        
-        if (!healthCheck.ok) {
+    function setStatus(online) {
+        if (online) {
+            statusIndicator.textContent = '● Online';
+            statusIndicator.className = 'status online';
+        } else {
+            statusIndicator.textContent = '● Offline';
+            statusIndicator.className = 'status offline';
+        }
+    }
+
+    // ===== FIXED: Check LM Studio with correct CORS handling =====
+    async function checkLMStudioStatus() {
+        try {
+            const response = await fetch(`${LM_STUDIO_BASE}/api/v1/models`, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                },
+                mode: 'cors', // Explicitly request CORS
+                signal: AbortSignal.timeout(3000)
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                // Check if our model is in the list
+                const models = data.models || [];
+                const modelLoaded = models.some(m => m.key === MODEL_NAME);
+                setStatus(modelLoaded);
+                if (!modelLoaded) {
+                    console.warn('Model not found:', MODEL_NAME);
+                }
+            } else {
+                setStatus(false);
+            }
+        } catch (error) {
+            console.warn('LM Studio connection error:', error.message);
             setStatus(false);
-            addMessage('⚠️ LM Studio is not responding. Please make sure:\n1. LM Studio is running\n2. The API server is enabled (Settings → Local Inference Server)\n3. A model is loaded', 'ai');
+        }
+    }
+
+    async function sendMessage() {
+        const message = chatInput.value.trim();
+        if (!message || isProcessing) return;
+
+        // First, check if LM Studio is reachable
+        try {
+            const healthCheck = await fetch(`${LM_STUDIO_BASE}/api/v1/models`, {
+                method: 'GET',
+                headers: { 'Accept': 'application/json' },
+                mode: 'cors',
+                signal: AbortSignal.timeout(3000)
+            });
+            
+            if (!healthCheck.ok) {
+                setStatus(false);
+                addMessage('⚠️ LM Studio is not responding. Please make sure:\n1. LM Studio is running\n2. The API server is enabled (Settings → Local Inference Server)\n3. A model is loaded\n\n📌 Tip: Check that the server is running on ' + LM_STUDIO_BASE, 'ai');
+                return;
+            }
+            
+            setStatus(true);
+        } catch (error) {
+            setStatus(false);
+            addMessage('⚠️ Cannot connect to LM Studio. Please ensure:\n1. LM Studio is running\n2. The API server is enabled (Settings → Local Inference Server)\n3. A model is loaded\n\n📌 Tip: Check that the server is running on ' + LM_STUDIO_BASE, 'ai');
             return;
         }
-        
-        setStatus(true);
-    } catch (error) {
-        setStatus(false);
-        addMessage('⚠️ Cannot connect to LM Studio. Please ensure:\n1. LM Studio is running\n2. The API server is enabled (Settings → Local Inference Server)\n3. A model is loaded\n\n📌 Tip: Server should be at http://192.168.1.4:1234', 'ai');
-        return;
-    }
 
-    isProcessing = true;
-    chatSendBtn.disabled = true;
-    chatInput.disabled = true;
+        isProcessing = true;
+        chatSendBtn.disabled = true;
+        chatInput.disabled = true;
 
-    addMessage(message, 'user');
-    chatInput.value = '';
-    setTyping(true);
+        addMessage(message, 'user');
+        chatInput.value = '';
+        setTyping(true);
 
-    try {
-        const response = await fetch(LM_STUDIO_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                model: MODEL_NAME,
-                messages: [
-                    {
-                        role: 'system',
-                        content: `You are a helpful assistant for HRP Dev, a company that builds Zoho and Salesforce CRM extensions. Your name is HRP Dev Assistant.
+        try {
+            const response = await fetch(LM_STUDIO_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                mode: 'cors',
+                body: JSON.stringify({
+                    model: MODEL_NAME,
+                    messages: [
+                        {
+                            role: 'system',
+                            content: `You are a helpful assistant for HRP Dev, a company that builds Zoho and Salesforce CRM extensions. Your name is HRP Dev Assistant.
 
 Key information about HRP Dev:
 - We build extensions for Zoho CRM and Salesforce
@@ -1628,68 +1659,52 @@ Key information about HRP Dev:
 - We have 15+ reviews on Fiverr with 4.8/5 rating
 
 Be friendly, professional, and concise. If asked about pricing, suggest contacting us directly.`
-                    },
-                    {
-                        role: 'user',
-                        content: message
-                    }
-                ],
-                temperature: 0.7,
-                max_tokens: 500,
-                stream: false
-            })
-        });
+                        },
+                        {
+                            role: 'user',
+                            content: message
+                        }
+                    ],
+                    temperature: 0.7,
+                    max_tokens: 500,
+                    stream: false
+                })
+            });
 
-        setTyping(false);
+            setTyping(false);
 
-        if (!response.ok) {
-            const errorData = await response.text();
-            throw new Error(`LM Studio error: ${response.status} - ${errorData}`);
+            if (!response.ok) {
+                const errorData = await response.text();
+                throw new Error(`LM Studio error: ${response.status} - ${errorData}`);
+            }
+
+            const data = await response.json();
+            const aiResponse = data.choices?.[0]?.message?.content || 'I apologize, but I couldn\'t generate a response. Please try again.';
+            addMessage(aiResponse, 'ai');
+
+        } catch (error) {
+            setTyping(false);
+            console.error('Chat error:', error);
+            addMessage(`⚠️ Error: ${error.message || 'Unable to connect to AI. Please check your LM Studio setup.'}`, 'ai');
         }
 
-        const data = await response.json();
-        const aiResponse = data.choices?.[0]?.message?.content || 'I apologize, but I couldn\'t generate a response. Please try again.';
-        addMessage(aiResponse, 'ai');
-
-    } catch (error) {
-        setTyping(false);
-        console.error('Chat error:', error);
-        addMessage(`⚠️ Error: ${error.message || 'Unable to connect to AI. Please check your LM Studio setup.'}`, 'ai');
+        isProcessing = false;
+        chatSendBtn.disabled = false;
+        chatInput.disabled = false;
+        chatInput.focus();
     }
 
-    isProcessing = false;
-    chatSendBtn.disabled = false;
-    chatInput.disabled = false;
-    chatInput.focus();
-}
+    chatInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            sendMessage();
+        }
+    });
 
-// Enter key to send
-chatInput.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-        e.preventDefault();
-        sendMessage();
-    }
-});
-
-// Check LM Studio status
-async function checkLMStudioStatus() {
-    try {
-        const response = await fetch(`${LM_STUDIO_BASE}/api/v1/models`, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-            },
-            signal: AbortSignal.timeout(2000)
-        });
-        
-        setStatus(response.ok);
-    } catch (error) {
-        setStatus(false);
-    }
-}
-
-setTimeout(checkLMStudioStatus, 500);
-setInterval(checkLMStudioStatus, 30000);
+    // Initial status check after a short delay
+    setTimeout(checkLMStudioStatus, 1000);
+    // Check status every 30 seconds
+    setInterval(checkLMStudioStatus, 30000);
 </script>
 
 </body>
