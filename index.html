@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>HRP Dev - Zoho & Salesforce CRM Solutions</title>
+    <meta name="description" content="HRP Dev builds powerful Zoho and Salesforce CRM extensions for data quality, validation, and automation. Trusted by businesses in 60+ countries." />
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: #1e293b;
+            line-height: 1.6;
+            background: #f8fafc;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn-primary {
+            display: inline-block;
+            background: #2563eb;
+            color: #fff;
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 15px;
+            transition: background 0.3s, transform 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-primary:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            display: inline-block;
+            background: transparent;
+            color: #2563eb;
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 15px;
+            border: 2px solid #2563eb;
+            transition: background 0.3s, color 0.3s;
+        }
+        .btn-secondary:hover {
+            background: #2563eb;
+            color: #fff;
+        }
+
+        .btn-outline-light {
+            display: inline-block;
+            background: transparent;
+            color: #fff;
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            border: 2px solid rgba(255,255,255,0.4);
+            transition: background 0.3s, border-color 0.3s;
+        }
+        .btn-outline-light:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: #fff;
+        }
+
+        .btn-small {
+            padding: 8px 18px;
+            font-size: 13px;
+        }
+
+        /* ===== NAVIGATION ===== */
+        nav {
+            background: #ffffff;
+            padding: 16px 40px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo {
+            font-size: 26px;
+            font-weight: 800;
+            color: #0f172a;
+            letter-spacing: -0.5px;
+        }
+        nav .logo span {
+            color: #2563eb;
+        }
+        nav .logo small {
+            font-size: 11px;
+            font-weight: 400;
+            color: #64748b;
+            display: block;
+            letter-spacing: 1px;
+            margin-top: -2px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 28px;
+            align-items: center;
+        }
+        nav ul li a {
+            color: #475569;
+            font-weight: 500;
+            font-size: 14px;
+            transition: color 0.3s;
+            position: relative;
+        }
+        nav ul li a:hover {
+            color: #2563eb;
+        }
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #2563eb;
+            transition: width 0.3s;
+        }
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        nav ul li a.cta-nav {
+            background: #2563eb;
+            color: #fff;
+            padding: 10px 22px;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+        nav ul li a.cta-nav:hover {
+            background: #1d4ed8;
+        }
+        nav ul li a.cta-nav::after {
+            display: none;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 28px;
+            background: none;
+            border: none;
+            color: #0f172a;
+            padding: 4px 8px;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 12px 20px;
+                flex-wrap: wrap;
+            }
+            .hamburger {
+                display: block;
+            }
+            nav ul {
+                display: none;
+                width: 100%;
+                flex-direction: column;
+                gap: 0;
+                padding: 16px 0 8px;
+                border-top: 1px solid #e2e8f0;
+                margin-top: 12px;
+            }
+            nav ul.show {
+                display: flex;
+            }
+            nav ul li {
+                width: 100%;
+                text-align: center;
+                padding: 10px 0;
+                border-bottom: 1px solid #f1f5f9;
+            }
+            nav ul li a.cta-nav {
+                display: inline-block;
+                margin-top: 4px;
+            }
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #2563eb 100%);
+            color: #fff;
+            padding: 80px 40px 70px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: rgba(37, 99, 235, 0.15);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .hero .container {
+            position: relative;
+            z-index: 1;
+        }
+        .hero .badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.12);
+            backdrop-filter: blur(4px);
+            padding: 8px 24px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 16px;
+            letter-spacing: -1px;
+        }
+        .hero h1 span {
+            color: #93c5fd;
+        }
+        .hero p {
+            font-size: 18px;
+            opacity: 0.85;
+            max-width: 640px;
+            margin: 0 auto 32px;
+            line-height: 1.7;
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .hero .stats-mini {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+        .hero .stats-mini div {
+            text-align: center;
+        }
+        .hero .stats-mini .num {
+            font-size: 32px;
+            font-weight: 700;
+            color: #93c5fd;
+        }
+        .hero .stats-mini .label {
+            font-size: 13px;
+            opacity: 0.7;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        @media (max-width: 600px) {
+            .hero h1 {
+                font-size: 30px;
+            }
+            .hero p {
+                font-size: 15px;
+            }
+            .hero .stats-mini {
+                gap: 24px;
+            }
+        }
+
+        /* ===== SECTION TITLES ===== */
+        .section-title {
+            text-align: center;
+            font-size: 34px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 12px;
+        }
+        .section-subtitle {
+            text-align: center;
+            color: #64748b;
+            font-size: 17px;
+            max-width: 600px;
+            margin: 0 auto 48px;
+        }
+
+        /* ===== ABOUT ===== */
+        .about {
+            padding: 80px 0;
+            background: #fff;
+        }
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+        .about-text h2 {
+            font-size: 30px;
+            margin-bottom: 16px;
+            color: #0f172a;
+        }
+        .about-text p {
+            color: #475569;
+            margin-bottom: 16px;
+            font-size: 16px;
+        }
+        .about-text .highlight-list {
+            list-style: none;
+            margin-top: 16px;
+        }
+        .about-text .highlight-list li {
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 15px;
+            color: #1e293b;
+        }
+        .about-text .highlight-list li::before {
+            content: '✓';
+            color: #2563eb;
+            font-weight: 700;
+            font-size: 18px;
+        }
+        .about-image {
+            background: linear-gradient(135deg, #dbeafe, #eff6ff);
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .about-image .big-icon {
+            font-size: 72px;
+            margin-bottom: 12px;
+        }
+        .about-image h3 {
+            color: #0f172a;
+            font-size: 20px;
+        }
+        .about-image p {
+            color: #475569;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+
+        /* ===== PRODUCTS / EXTENSIONS ===== */
+        .products {
+            padding: 80px 0;
+            background: #f1f5f9;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .product-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 28px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-top: 5px solid #2563eb;
+            display: flex;
+            flex-direction: column;
+        }
+        .product-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.10);
+        }
+        .product-card .icon {
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+        .product-card h3 {
+            font-size: 19px;
+            color: #0f172a;
+            margin-bottom: 4px;
+        }
+        .product-card .crm-badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 3px 12px;
+            border-radius: 20px;
+            background: #dbeafe;
+            color: #1d4ed8;
+            margin-bottom: 10px;
+            align-self: flex-start;
+        }
+        .product-card .crm-badge.salesforce {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+        .product-card .crm-badge.zoho {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+        .product-card p {
+            color: #475569;
+            font-size: 14px;
+            flex-grow: 1;
+            margin-bottom: 14px;
+        }
+        .product-card .features-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+        .product-card .features-tags span {
+            background: #f1f5f9;
+            padding: 3px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            color: #475569;
+        }
+        .product-card .product-link {
+            color: #2563eb;
+            font-weight: 600;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: gap 0.3s;
+        }
+        .product-card .product-link:hover {
+            gap: 12px;
+        }
+
+        /* ===== SERVICES ===== */
+        .services {
+            padding: 80px 0;
+            background: #fff;
+        }
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 30px;
+        }
+        .service-card {
+            background: #f8fafc;
+            padding: 30px 24px;
+            border-radius: 12px;
+            text-align: center;
+            transition: background 0.3s, transform 0.3s;
+            border: 1px solid #e2e8f0;
+        }
+        .service-card:hover {
+            background: #eff6ff;
+            transform: translateY(-4px);
+        }
+        .service-card .icon {
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+        .service-card h4 {
+            font-size: 17px;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+        .service-card p {
+            font-size: 14px;
+            color: #64748b;
+        }
+
+        /* ===== PROCESS / HOW WE WORK ===== */
+        .process {
+            padding: 80px 0;
+            background: #f1f5f9;
+        }
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            text-align: center;
+        }
+        .process-step .step-num {
+            width: 56px;
+            height: 56px;
+            background: #2563eb;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            font-weight: 700;
+            margin: 0 auto 14px;
+        }
+        .process-step h4 {
+            font-size: 17px;
+            color: #0f172a;
+            margin-bottom: 6px;
+        }
+        .process-step p {
+            font-size: 14px;
+            color: #64748b;
+        }
+
+        /* ===== SHARE IDEA / CTA SECTION ===== */
+        .share-idea {
+            padding: 80px 0;
+            background: #fff;
+            text-align: center;
+        }
+        .share-idea .idea-box {
+            background: linear-gradient(135deg, #eff6ff, #dbeafe);
+            border-radius: 16px;
+            padding: 50px 40px;
+            max-width: 800px;
+            margin: 0 auto;
+            border: 2px dashed #2563eb;
+        }
+        .share-idea .idea-box h3 {
+            font-size: 28px;
+            color: #0f172a;
+            margin-bottom: 12px;
+        }
+        .share-idea .idea-box p {
+            color: #475569;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        /* ===== TESTIMONIALS ===== */
+        .testimonials {
+            padding: 80px 0;
+            background: #f8fafc;
+        }
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 30px;
+        }
+        .testimonial-card {
+            background: #fff;
+            padding: 24px;
+            border-radius: 12px;
+            border-left: 4px solid #2563eb;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .testimonial-card p {
+            font-size: 15px;
+            color: #1e293b;
+            font-style: italic;
+            margin-bottom: 12px;
+        }
+        .testimonial-card .author {
+            font-weight: 600;
+            font-size: 14px;
+            color: #0f172a;
+        }
+        .testimonial-card .role {
+            font-size: 12px;
+            color: #94a3b8;
+        }
+
+        /* ===== COST BREAKDOWN ===== */
+        .cost-breakdown {
+            padding: 80px 0;
+            background: #fff;
+        }
+        .cost-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 24px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .cost-item {
+            background: #f8fafc;
+            padding: 24px 20px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+        }
+        .cost-item .phase {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #94a3b8;
+        }
+        .cost-item .percentage {
+            font-size: 32px;
+            font-weight: 700;
+            color: #2563eb;
+        }
+        .cost-item .label {
+            font-size: 14px;
+            color: #475569;
+        }
+
+        /* ===== CTA FINAL ===== */
+        .cta-final {
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: #fff;
+            padding: 80px 40px;
+            text-align: center;
+        }
+        .cta-final h2 {
+            font-size: 34px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .cta-final p {
+            font-size: 17px;
+            opacity: 0.8;
+            max-width: 560px;
+            margin: 0 auto 32px;
+        }
+        .cta-final .btn-group {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* ===== CONTACT / FORM ===== */
+        .contact-section {
+            padding: 80px 0;
+            background: #f1f5f9;
+        }
+        .contact-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .contact-info h3 {
+            font-size: 24px;
+            margin-bottom: 16px;
+        }
+        .contact-info p {
+            color: #475569;
+            margin-bottom: 12px;
+        }
+        .contact-info .detail {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 0;
+            color: #1e293b;
+        }
+        .contact-info .detail .icon {
+            font-size: 20px;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: inherit;
+            margin-bottom: 16px;
+            transition: border-color 0.3s;
+            background: #fff;
+        }
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+        .contact-form textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        .contact-form .btn-primary {
+            width: 100%;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .contact-wrapper {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: #0f172a;
+            color: #cbd5e1;
+            padding: 50px 40px 30px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .footer-grid h4 {
+            color: #fff;
+            font-size: 15px;
+            margin-bottom: 14px;
+        }
+        .footer-grid p,
+        .footer-grid a {
+            font-size: 14px;
+            color: #94a3b8;
+            line-height: 2;
+            display: block;
+        }
+        .footer-grid a:hover {
+            color: #fff;
+        }
+        .footer-grid .logo-footer {
+            font-size: 22px;
+            font-weight: 700;
+            color: #fff;
+        }
+        .footer-grid .logo-footer span {
+            color: #2563eb;
+        }
+        .footer-bottom {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 24px;
+            border-top: 1px solid #1e293b;
+            font-size: 13px;
+            color: #64748b;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        @media (max-width: 768px) {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 24px;
+            }
+        }
+        @media (max-width: 480px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== NAVIGATION ===== -->
+<nav>
+    <a href="#home" class="logo">
+        HRP <span>Dev</span>
+        <small>Zoho &amp; Salesforce Experts</small>
+    </a>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Toggle menu">☰</button>
+    <ul id="navMenu">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#products">Extensions</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#contact" class="cta-nav">Get Started</a></li>
+    </ul>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="home">
+    <div class="container">
+        <div class="badge">🚀 Trusted CRM Solution Provider</div>
+        <h1>Build Smarter CRM <br><span>with HRP Dev</span></h1>
+        <p>We build powerful Zoho &amp; Salesforce extensions that automate data quality, validation, and reporting — so your team can focus on selling.</p>
+        <div class="hero-buttons">
+            <a href="#products" class="btn-primary">View Our Extensions</a>
+            <a href="#contact" class="btn-outline-light">Let's Talk</a>
+        </div>
+        <div class="stats-mini">
+            <div><div class="num">6+</div><div class="label">Extensions Built</div></div>
+            <div><div class="num">60+</div><div class="label">Countries Served</div></div>
+            <div><div class="num">100%</div><div class="label">Client Satisfaction</div></div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== ABOUT ===== -->
+<section class="about" id="about">
+    <div class="container">
+        <div class="about-grid">
+            <div class="about-text">
+                <h2>Who We Are</h2>
+                <p><strong>HRP Dev</strong> is a boutique CRM development company specializing in the Zoho and Salesforce ecosystems.</p>
+                <p>We create extensions that solve real problems — from data hygiene and validation to automated reporting and workflow optimization.</p>
+                <ul class="highlight-list">
+                    <li>6+ extensions published on Zoho Marketplace</li>
+                    <li>Trusted by businesses in 60+ countries</li>
+                    <li>End-to-end development: ideation to deployment</li>
+                    <li>Ongoing support &amp; maintenance</li>
+                </ul>
+            </div>
+            <div class="about-image">
+                <div class="big-icon">⚡</div>
+                <h3>HRP Dev</h3>
+                <p>Innovative CRM Solutions</p>
+                <p style="font-size:13px; margin-top:8px; color:#64748b;">Zoho · Salesforce · Custom Development</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== PRODUCTS / EXTENSIONS ===== -->
+<section class="products" id="products">
+    <div class="container">
+        <h2 class="section-title">Our Extensions</h2>
+        <p class="section-subtitle">Powerful add-ons built for Zoho and Salesforce CRM to supercharge your data quality.</p>
+
+        <div class="product-grid">
+
+            <!-- Data Guardian - Zoho -->
+            <div class="product-card">
+                <div class="icon">🛡️</div>
+                <h3>Data Guardian</h3>
+                <span class="crm-badge zoho">Zoho CRM</span>
+                <p>Automated data quality management: health scoring, email/phone/address validation, and auto-generated reports.</p>
+                <div class="features-tags">
+                    <span>Health Score</span>
+                    <span>Email Validation</span>
+                    <span>Phone Validation</span>
+                    <span>Auto Reports</span>
+                </div>
+                <a href="https://marketplace.zoho.com/vendor/hrp-dev" target="_blank" class="product-link">View on Marketplace →</a>
+            </div>
+
+            <!-- Data Guardian - Salesforce -->
+            <div class="product-card">
+                <div class="icon">🛡️</div>
+                <h3>Data Guardian</h3>
+                <span class="crm-badge salesforce">Salesforce CRM</span>
+                <p>Same powerful data validation and health scoring, now built for Salesforce. Keep your Leads, Contacts, and Accounts clean.</p>
+                <div class="features-tags">
+                    <span>Health Score</span>
+                    <span>Email Validation</span>
+                    <span>Phone Validation</span>
+                    <span>Auto Reports</span>
+                </div>
+                <a href="#" class="product-link">Coming Soon →</a>
+            </div>
+
+            <!-- Email Verifier -->
+            <div class="product-card">
+                <div class="icon">📧</div>
+                <h3>Email Verifier Pro</h3>
+                <span class="crm-badge zoho">Zoho CRM</span>
+                <p>Real-time email validation with disposable domain detection, typo correction, and bulk verification.</p>
+                <div class="features-tags">
+                    <span>Bulk Verify</span>
+                    <span>Disposable Detection</span>
+                    <span>Typo Fix</span>
+                </div>
+                <a href="https://marketplace.zoho.com/vendor/hrp-dev" target="_blank" class="product-link">View on Marketplace →</a>
+            </div>
+
+            <!-- Address Verify -->
+            <div class="product-card">
+                <div class="icon">🏠</div>
+                <h3>Address Verify &amp; Timezone</h3>
+                <span class="crm-badge zoho">Zoho CRM</span>
+                <p>Global address verification with customer timezone detection and local time setup for better engagement.</p>
+                <div class="features-tags">
+                    <span>Global Verify</span>
+                    <span>Timezone Detect</span>
+                    <span>Local Time</span>
+                </div>
+                <a href="https://marketplace.zoho.com/vendor/hrp-dev" target="_blank" class="product-link">View on Marketplace →</a>
+            </div>
+
+            <!-- US Address Verify -->
+            <div class="product-card">
+                <div class="icon">🇺🇸</div>
+                <h3>US Address Verify</h3>
+                <span class="crm-badge zoho">Zoho CRM</span>
+                <p>Improve sales and delivery with reliable US address verification built specifically for the US market.</p>
+                <div class="features-tags">
+                    <span>US Only</span>
+                    <span>Delivery Accuracy</span>
+                    <span>Sales Enablement</span>
+                </div>
+                <a href="https://marketplace.zoho.com/vendor/hrp-dev" target="_blank" class="product-link">View on Marketplace →</a>
+            </div>
+
+            <!-- Phone Validator -->
+            <div class="product-card">
+                <div class="icon">📞</div>
+                <h3>Phone Validator</h3>
+                <span class="crm-badge zoho">Zoho CRM</span>
+                <p>Country-specific phone validation for 60+ countries with format correction and carrier detection.</p>
+                <div class="features-tags">
+                    <span>60+ Countries</span>
+                    <span>Format Correction</span>
+                    <span>Carrier Detect</span>
+                </div>
+                <a href="https://marketplace.zoho.com/vendor/hrp-dev" target="_blank" class="product-link">View on Marketplace →</a>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ===== SERVICES ===== -->
+<section class="services" id="services">
+    <div class="container">
+        <h2 class="section-title">Our Services</h2>
+        <p class="section-subtitle">From custom development to ongoing support — we've got your CRM covered.</p>
+        <div class="service-grid">
+
+            <div class="service-card">
+                <div class="icon">⚙️</div>
+                <h4>Zoho CRM Customization</h4>
+                <p>Customize Zoho CRM modules, workflows, and layouts to perfectly match your business process.</p>
+            </div>
+
+            <div class="service-card">
+                <div class="icon">📱</div>
+                <h4>Creator App Development</h4>
+                <p>Build custom applications with Zoho Creator using Deluge scripts to automate complex workflows.</p>
+            </div>
+
+            <div class="service-card">
+                <div class="icon">📚</div>
+                <h4>Books &amp; Finance Integration</h4>
+                <p>Automate accounting processes by integrating Zoho Books with Zoho Inventory, CRM, or third-party apps.</p>
+            </div>
+
+            <div class="service-card">
+                <div class="icon">🔗</div>
+                <h4>API &amp; Third-Party Integration</h4>
+                <p>Seamlessly connect Zoho apps with third-party platforms like Shopify, QuickBooks, or Google Workspace.</p>
+            </div>
+
+            <div class="service-card">
+                <div class="icon">📊</div>
+                <h4>Zoho Analytics &amp; Reporting</h4>
+                <p>Build insightful dashboards and reports for data-driven decision-making with colorful analytics.</p>
+            </div>
+
+            <div class="service-card">
+                <div class="icon">🏪</div>
+                <h4>Marketplace App Development</h4>
+                <p>Design and publish custom extensions on the Zoho Marketplace for CRM, Books, Projects, and more.</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ===== HOW WE WORK (PROCESS) ===== -->
+<section class="process" id="process">
+    <div class="container">
+        <h2 class="section-title">How We Work</h2>
+        <p class="section-subtitle">A transparent, client-first process from start to finish.</p>
+        <div class="process-steps">
+            <div class="process-step">
+                <div class="step-num">1</div>
+                <h4>Discovery</h4>
+                <p>We listen to your needs and map out the perfect solution.</p>
+            </div>
+            <div class="process-step">
+                <div class="step-num">2</div>
+                <h4>Design &amp; Build</h4>
+                <p>Our team develops and tests your extension in a sandbox environment.</p>
+            </div>
+            <div class="process-step">
+                <div class="step-num">3</div>
+                <h4>Deploy</h4>
+                <p>We publish on Marketplace and guide you through installation.</p>
+            </div>
+            <div class="process-step">
+                <div class="step-num">4</div>
+                <h4>Support</h4>
+                <p>Ongoing maintenance, updates, and client success.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== SHARE YOUR IDEA ===== -->
+<section class="share-idea" id="share">
+    <div class="container">
+        <div class="idea-box">
+            <h3>💡 Share Your Idea for an App</h3>
+            <p>Whenever you come across something innovative or have a new idea, please share it with us so we can build the Zoho app you need.</p>
+            <a href="#contact" class="btn-primary">Share Your Idea</a>
+        </div>
+    </div>
+</section>
+
+<!-- ===== COST BREAKDOWN ===== -->
+<section class="cost-breakdown" id="cost">
+    <div class="container">
+        <h2 class="section-title">Mobile App Development Cost Breakdown</h2>
+        <p class="section-subtitle">Based on development stages — transparent pricing for your next project.</p>
+        <div class="cost-grid">
+            <div class="cost-item">
+                <div class="phase">Discovery</div>
+                <div class="percentage">15%</div>
+                <div class="label">Research &amp; Planning</div>
+            </div>
+            <div class="cost-item">
+                <div class="phase">Design</div>
+                <div class="percentage">25%</div>
+                <div class="label">UI/UX &amp; Prototyping</div>
+            </div>
+            <div class="cost-item">
+                <div class="phase">Development</div>
+                <div class="percentage">40%</div>
+                <div class="label">Coding &amp; Testing</div>
+            </div>
+            <div class="cost-item">
+                <div class="phase">Deployment</div>
+                <div class="percentage">20%</div>
+                <div class="label">Launch &amp; Support</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== TESTIMONIALS ===== -->
+<section class="testimonials" id="testimonials">
+    <div class="container">
+        <h2 class="section-title">What Our Clients Say</h2>
+        <p class="section-subtitle">Real feedback from businesses we've helped.</p>
+        <div class="testimonial-grid">
+            <div class="testimonial-card">
+                <p>"Data Guardian has completely transformed how we manage leads. Our sales team now spends less time on bad data and more time closing deals."</p>
+                <div class="author">Sarah Johnson</div>
+                <div class="role">Sales Director, TechFlow Inc.</div>
+            </div>
+            <div class="testimonial-card">
+                <p>"HRP Dev built a custom extension for us that integrated Zoho with our internal tools. The process was smooth and the support is outstanding."</p>
+                <div class="author">Michael Chen</div>
+                <div class="role">CTO, GreenLeaf Solutions</div>
+            </div>
+            <div class="testimonial-card">
+                <p>"We've tried several CRM tools, but HRP Dev's extensions made Zoho actually work for our business. Highly recommended!"</p>
+                <div class="author">Priya Patel</div>
+                <div class="role">Operations Lead, Nexus Logistics</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section class="contact-section" id="contact">
+    <div class="container">
+        <h2 class="section-title">Get In Touch</h2>
+        <p class="section-subtitle">Ready to transform your business? Let's build something great together.</p>
+
+        <div class="contact-wrapper">
+            <div class="contact-info">
+                <h3>Let's Talk</h3>
+                <p>We're here to help you with your CRM needs. Whether it's a custom extension, integration, or consultation — reach out to us.</p>
+                <div class="detail"><span class="icon">📧</span> polas.habib@zohomail.com</div>
+                <div class="detail"><span class="icon">🌐</span> marketplace.zoho.com/vendor/hrp-dev</div>
+                <div class="detail"><span class="icon">📍</span> Bangladesh · Serving Worldwide</div>
+                <br>
+                <a href="https://marketplace.zoho.com/vendor/hrp-dev" target="_blank" class="btn-primary btn-small">Visit Marketplace</a>
+            </div>
+
+            <form class="contact-form" action="#" method="POST">
+                <input type="text" placeholder="Your Name" required />
+                <input type="email" placeholder="Your Email" required />
+                <input type="text" placeholder="Subject" />
+                <textarea placeholder="Tell us about your project or idea..." required></textarea>
+                <button type="submit" class="btn-primary">Send Message →</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FINAL CTA ===== -->
+<section class="cta-final">
+    <div class="container">
+        <h2>Ready to Build Something Great?</h2>
+        <p>Let's discuss how we can help you with CRM development, extensions, or data quality solutions.</p>
+        <div class="btn-group">
+            <a href="#contact" class="btn-primary">Get Started Now</a>
+            <a href="https://marketplace.zoho.com/vendor/hrp-dev" target="_blank" class="btn-outline-light">Browse Extensions</a>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+    <div class="footer-grid">
+        <div>
+            <div class="logo-footer">HRP <span>Dev</span></div>
+            <p style="margin-top: 8px;">Innovative Zoho &amp; Salesforce CRM solutions.</p>
+            <p style="font-size:13px; color:#64748b;">📍 Bangladesh · Serving Worldwide</p>
+        </div>
+        <div>
+            <h4>Extensions</h4>
+            <a href="https://marketplace.zoho.com/vendor/hrp-dev" target="_blank">Data Guardian (Zoho)</a>
+            <a href="#">Data Guardian (Salesforce)</a>
+            <a href="https://marketplace.zoho.com/vendor/hrp-dev" target="_blank">Email Verifier Pro</a>
+            <a href="https://marketplace.zoho.com/vendor/hrp-dev" target="_blank">Phone Validator</a>
+            <a href="https://marketplace.zoho.com/vendor/hrp-dev" target="_blank">Address Verify</a>
+        </div>
+        <div>
+            <h4>Company</h4>
+            <a href="#about">About Us</a>
+            <a href="#services">Services</a>
+            <a href="#testimonials">Testimonials</a>
+            <a href="#contact">Contact</a>
+        </div>
+        <div>
+            <h4>Connect</h4>
+            <a href="mailto:polas.habib@zohomail.com">📧 Email Us</a>
+            <a href="https://marketplace.zoho.com/vendor/hrp-dev" target="_blank">🌐 Zoho Marketplace</a>
+            <a href="#">🔗 LinkedIn</a>
+            <a href="#">🐦 Twitter</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        &copy; 2026 HRP Dev. All rights reserved. Built with ❤️ for CRM excellence.
+    </div>
+</footer>
+
+<!-- ===== JAVASCRIPT ===== -->
+<script>
+    function toggleMenu() {
+        const menu = document.getElementById('navMenu');
+        menu.classList.toggle('show');
+    }
+
+    // Close menu when a link is clicked (for mobile)
+    document.querySelectorAll('#navMenu a').forEach(link => {
+        link.addEventListener('click', () => {
+            document.getElementById('navMenu').classList.remove('show');
+        });
+    });
+
+    // Smooth contact form submission (prevent default for demo)
+    document.querySelector('.contact-form')?.addEventListener('submit', function(e) {
+        e.preventDefault();
+        alert('Thank you for your message! We will get back to you shortly.');
+        this.reset();
+    });
+</script>
+
+</body>
+</html>
