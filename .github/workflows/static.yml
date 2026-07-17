@@ -16,6 +16,7 @@ concurrency:
 
 jobs:
   deploy:
+    # ===== IMPORTANT: Reference the environment where your secret is stored =====
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -34,6 +35,9 @@ jobs:
           echo "window.API_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';" >> config.js
           echo "window.API_MODEL = 'gemini-1.5-flash';" >> config.js
           echo "✅ config.js created successfully!"
+        env:
+          # Explicitly pass the secret from the environment
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
